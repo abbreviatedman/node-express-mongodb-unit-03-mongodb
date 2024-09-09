@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "Ash Ketchum",
+    "Region": "Kanto"
+  },
+  {
+    "Name": "Gary Oak",
+    "Region": "Kanto"
+  },
+  {
+    "Name": "Brock",
+    "Region": "Kanto"
+  },
+  {
+    "Name": "Misty",
+    "Region": "Kanto"
+  },
+  {
+    "Name": "May",
+    "Region": "Hoenn"
+  },
+  {
+    "Name": "Dawn",
+    "Region": "Sinnoh"
+  },
+  {
+    "Name": "Serena",
+    "Region": "Kalos"
+  },
+  {
+    "Name": "Kiawe",
+    "Region": "Alola"
+  },
+  {
+    "Name": "Chloe",
+    "Region": "Galar"
+  },
+  {
+    "Name": "Raihan",
+    "Region": "Galar"
+  }
+]

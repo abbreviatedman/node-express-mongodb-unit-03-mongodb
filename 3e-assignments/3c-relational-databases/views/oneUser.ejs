@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("./partials/head") %>
+<body>
+    <h1>Information about username <%=user.username%>!</h1>
+    <br>
+    <a href="/">Go back to the homepage</a>
+    <br>
+    <a href="/users">Go back to a list of users!</a>
+    <br>
+
+    <h3> List of games this user has liked: </h3>
+    <% games.forEach((game) => { %>
+        <div>
+            <p>title: <a href="/games/<%=game._id%>"> <%= game.title %> </a> </p>
+        </div>
+    <% }) %>
+</body>
+</html>

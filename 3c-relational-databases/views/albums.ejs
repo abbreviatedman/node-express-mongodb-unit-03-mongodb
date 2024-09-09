@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <%- include("./partials/head") %>
+      <body>
+        <%- include("./partials/navbar") %>
+        
+        <h3>
+          Here are a list of albums:
+        </h3>
+
+        <% albums.forEach((album) => { %>
+            <div class="albumCard">
+                <p>Album name: <%= album.title %> </p>
+                <p>Artist: <%= album.artist %> </p>
+                <a href="/albums/<%=album._id%>">More info about this album</a>
+            </div>
+        <% }) %>
+        
+      </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon App</title>
+</head>
+<body>
+    <h1>Here is everything you need to know about <%=pokemon.Name%></h1>
+    <a href="/allMons">Go back to all Pokemon</a>
+
+        <h2>Pokedex No. <%=pokemon.PokedexNo%></h2>
+        <h3>Name: <%=pokemon.Name%></h3>
+        <h4>Type: <%=pokemon.Type%></h4>
+        <ul>
+            Moves: 
+            <% pokemon.Moves.forEach((move) => { %>
+                <li><%=move%></li>
+            <% }) %>
+        </ul>
+
+        <ul>
+            <strong>List of trainers who own a <%=pokemon.Name%>:</strong>
+
+            <% allTrainers.forEach((trainer) => { %>
+                <% if (pokemon.TrainerList.includes(trainer._id)) { %>
+                    <li><%=trainer.Name%></li>
+                <% } %>
+            <% }) %>
+        </ul>
+
+        <br><br>
+
+        <form action="/api/pokemon/pokemonCapturedByTrainer/<%=pokemon.Name%>?_method=PUT" method="post">
+
+            <select name="id">
+                <% allTrainers.forEach((trainer) => { %>
+                    <% if(!pokemon.TrainerList.includes(trainer._id)) { %>
+                        <option value="<%=trainer._id%>"><%= trainer.Name %></option>
+                    <% } %>
+                <% }) %>
+            </select>
+
+            <input type="submit" value="Catch That Pokemon!">
+        </form>
+
+        <br><br>
+
+        <br>
+
+        <a href="/updateMon/<%=pokemon.Name%>">Update this pokemon</a>
+
+        <br>
+
+        <form action="/api/pokemon/deleteOnePokemon/<%=pokemon.Name%>?_method=DELETE" method="post">
+            <input type="submit" name="_method" value="DELETE THIS POKEMON">
+        </form>
+</body>
+</html>

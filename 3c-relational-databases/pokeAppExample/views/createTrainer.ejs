@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon App</title>
+</head>
+<body>
+    <h1>Fill out the form to create a new Trainer</h1>
+    <br>
+    <a href="/allTrainers">Back to all Trainers</a>
+
+    <br><br>
+
+    <form action="/api/trainers/createTrainer" method="post">
+        <label for="Name">Name</label>
+        <input type="text" id="Name" name="Name">
+
+        <br><br>
+
+        <label for="Region">Region</label>
+        <input type="text" id="Region" name="Region">
+
+        <br><br>
+
+        <input type="submit" value="Create Trainer">
+    </form>
+</body>
+</html>

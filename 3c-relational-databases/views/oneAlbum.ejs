@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <%- include("./partials/head") %>
+      <body>
+        <%- include("./partials/navbar") %>
+        
+        <h3>
+          Here are a list of users that like the album <%= album.title %>:
+        </h3>
+
+        <% userList.forEach((user) => { %>
+            <div class="albumCard">
+                <p>Username: <%= user.username %> </p>
+            </div>
+        <% }) %>
+        
+      </body>
+</html>

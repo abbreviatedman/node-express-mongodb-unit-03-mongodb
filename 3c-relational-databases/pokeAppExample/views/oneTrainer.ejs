@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon App</title>
+</head>
+<body>
+    <h1>Here is everything you need to know about Pokemon Trainer <%=trainer.Name%></h1>
+    <a href="/allTrainers">Back to all trainers</a>
+
+    <h2>Name: <%=trainer.Name%></h2>
+    <h3>Region: <%=trainer.Region%></h3>
+
+    <ul>
+        <strong>List of Pokemon who <%=trainer.Name%> owns:</strong>
+
+        <% allPokemon.forEach((mon) => { %>
+            <% if (trainer.PokemonList.includes(mon._id)) { %>
+                <li><%=mon.Name%></li>
+            <% } %>
+        <% }) %>
+    </ul>
+</body>
+</html>

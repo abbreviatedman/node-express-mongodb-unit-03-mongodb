@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon App</title>
+</head>
+<body>
+    <h1>Here is a list of all Trainers:</h1>
+    <a href="/">Go back home</a>
+    <br>
+    <a href="/createTrainer">Create a new Trainer!</a>
+    <br>
+
+    <% trainers.forEach((trainer) => { %>
+        <h2>Name: 
+            <a href="/oneTrainer/<%=trainer.Name%>">
+                <%=trainer.Name%>
+            </a>
+        </h2>
+    <% }) %>
+</body>
+</html>

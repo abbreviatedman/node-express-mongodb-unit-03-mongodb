@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Pokemon</title>
+</head>
+<body>
+    <h1>Here is a list of all pokemon</h1>
+    <a href="/">Go back home</a>
+    <br>
+    <a href="/createOneMon">Create a new Pokemon</a>
+    <% pokemon.forEach((mon) => { %>
+        <h1> Pokedex No. <%= mon.PokedexNo %> </h1>
+        <h2> 
+            <a href="/oneMon/<%=mon.Name%>">Name: <%= mon.Name %></a>
+        </h2>
+        <h3> Type: <%= mon.Type %> </h3>
+        <ul>
+            Moves:
+            <% mon.Moves.forEach((move) => { %>
+                <li> <%= move %> </li>
+            <% }) %>
+        </ul>
+    <% }) %>
+</body>
+</html>
