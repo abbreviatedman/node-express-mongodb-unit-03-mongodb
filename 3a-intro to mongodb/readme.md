@@ -42,7 +42,6 @@ Download the version (Mac or Windows) that matches your machine.
 By now, you should have Atlas and Compass both set up. Let's begin setting up our project.
 
 3. In VSCode terminal, navigate to 03.01.Intro-to-MongoDB and initialize the project
-<!-- 3. In terminal, initialize the project -->
 
 ```
 npm init -y
@@ -53,14 +52,12 @@ npm init -y
 - express
 - mongoose
 - dotenv
-<!-- 4. In terminal, install modules -->
 
 ```
 npm install express mongoose dotenv
 ```
 
 5. Import the necessary modules on **index.js**
-<!-- 5. Import the necessary modules -->
 
 ```js
 const express = require("express");
@@ -71,7 +68,6 @@ require("dotenv").config();
 ```
 
 6. Listen to a port
-<!-- 6. Listen to a port -->
 
 ```js
 app.listen(8080, () => {
@@ -92,7 +88,6 @@ An Environment Variable is a dynamic-named value that can affect the way running
 We need to use our URI connection string (Instructions above said in ALL CAPS to save the string somewhere SAFE) to establish a connection to MongoDB.
 
 7. Create a file called `.env`, and place this string on the first line
-<!-- 7. Create a file called `.env`, and place this string on the first line -->
 
 ```
 MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb.net/test"
@@ -104,7 +99,6 @@ MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb
 - The `/test` at the end is the name of your database
 
 8. Create a file called `.gitignore` to protect this variable from being seen on Github
-<!-- 8. Create a file called `.gitignore` to protect this variable from being seen on Github -->
 
 ```
 ./node_modules
@@ -116,7 +110,6 @@ This file stops the listed files from being uploaded to Github. This way, if we 
 Next, we can establish a connection with our database using Mongoose
 
 9. Establish a connection to our database
-<!-- 9. Establish a connection to our database -->
 
 ```js
 mongoose
@@ -140,7 +133,6 @@ mongoose.set("strictQuery", false);
 A Schema defines the structure of the document, with all the field names and data types. `mongoose.Schema()` will take in a javascript object, which we will use as our document.
 
 10. Create a schema for a new collection
-<!-- 10. Create a schema for a new collection -->
 
 ```js
 const studentSchema = new mongoose.Schema({
@@ -162,7 +154,6 @@ A database model shows the logical structure of a database, including the relati
 Let's create our model by passing in the schema and a name for our model.
 
 11. Create our model
-<!-- 11. Create our model -->
 
 ```js
 const Student = mongoose.model("Student", studentSchema);
@@ -174,7 +165,6 @@ const Student = mongoose.model("Student", studentSchema);
 Let's add a document whenever our app is loaded.
 
 12. A) Add a document on load
-<!-- 12. Add a document on load -->
 
 ```js
 // 12a. Create a document via the model
@@ -208,7 +198,6 @@ stud
 Finally, let's define a GET request for the root URL which returns all the documents in the Student collection. This should return the document we added.
 
 13. Set up a GET request to `localhost:8080`
-<!-- 13. Set up a GET request to `localhost:8080` -->
 
 ```js
 app.get("/", (req, res) => {
