@@ -4,19 +4,17 @@
 // 1a. Import mongoose, setup .env use
 const mongoose = require("mongoose");
 require("dotenv").config();
-mongoose.set("strictQuery", false);
 
 // 1b. Create a connection function
-function connectToMongoDB() {
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => {
-      console.log("MONGODB CONNECTED");
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-}
+const connectToMongoDb = async function () {
+  mongoose.set("strictQuery", false);
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("MONGODB CONNECTED");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // 1c. Export the function
-module.exports = connectToMongoDB;
+module.exports = connectToMongoDb;

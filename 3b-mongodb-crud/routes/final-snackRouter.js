@@ -13,7 +13,6 @@ const Snack = require("../models/snackModel");
 router.get("/", async (req, res) => {
   try {
     let foundSnacks = await Snack.find({});
-
     res.json({
       message: "success",
       payload: foundSnacks,
@@ -30,11 +29,10 @@ router.get("/", async (req, res) => {
 // localhost:3000/api/create-snack
 router.post("/create-snack", async (req, res) => {
   try {
-    await Snack.create(req.body);
-
+    const createdSnack = await Snack.create(req.body);
     res.json({
       message: "success",
-      payload: req.body,
+      payload: createdSnack,
     });
   } catch (error) {
     console.log("create-snack function failed");
@@ -54,8 +52,7 @@ router.put("/update-snack/:id", async (req, res) => {
       { upsert: true }
     );
 
-    let updatedSnack = await Snack.find({ _id: req.params.id });
-
+    let updatedSnack = await Snack.findById(req.params.id);
     res.json({
       message: "success",
       payload: updatedSnack,
@@ -67,7 +64,6 @@ router.put("/update-snack/:id", async (req, res) => {
     };
 
     res.json(errorPacket);
-
     console.log(errorPacket);
   }
 });
@@ -78,8 +74,7 @@ router.put("/update-snack/:id", async (req, res) => {
 // localhost:3000/api/delete-snack/:id
 router.delete("/delete-snack/:id", async (req, res) => {
   try {
-    await Snack.findByIdAndDelete({ _id: req.params.id });
-
+    await Snack.findByIdAndDelete(req.params.id);
     res.json({
       message: "success",
       payload: await Snack.find({}),
@@ -91,7 +86,6 @@ router.delete("/delete-snack/:id", async (req, res) => {
     };
 
     res.json(errorPacket);
-
     console.log(errorPacket);
   }
 });

@@ -8,7 +8,7 @@ const logger = require("morgan");
 /*
     3. Import the database connection on `index.js`
 */
-const connectToMongoDB = require("./database/mongodb");
+const connectToMongoDb = require("./database/mongodb");
 
 /*
     0. Starter code - Middleware
@@ -34,5 +34,5 @@ app.listen(PORT, () => {
   /*
        4. Establish the connection when the server runs
     */
-  connectToMongoDB();
+  connectToMongoDb();
 });

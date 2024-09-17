@@ -43,22 +43,20 @@ We will start by establishing a basic connection to MongoDB. In the `./database`
 // 1a. Import mongoose, setup .env use
 const mongoose = require("mongoose");
 require("dotenv").config();
-mongoose.set("strictQuery", false);
 
 // 1b. Create a connection function
-function connectToMongoDB() {
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => {
-      console.log("MONGODB CONNECTED");
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-}
+const connectToMongoDb = async function () {
+  mongoose.set("strictQuery", false);
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("MONGODB CONNECTED");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // 1c. Export the function
-module.exports = connectToMongoDB;
+module.exports = connectToMongoDb;
 ```
 
 Next, we should make sure the correct connection string is protected by placing it in the `.env` file:
@@ -69,23 +67,25 @@ Next, we should make sure the correct connection string is protected by placing 
 MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb.net/CRUD-test"
 ```
 
-The end of this URI should say `.net/CRUD-test`. This way we keep the databases in our cluster separated properly.
+The end of this URI should say `.net/CRUD-test`. "CRUD-test" will be the name of the database. This way we keep the databases in our cluster separated properly.
 
 3. Import the database connection on `index.js`
 
 ```js
-const connectToMongoDB = require("./database/mongodb");
+const connectToMongoDb = require("./database/mongodb");
 ```
 
 4. Establish the connection when the server runs
 
 ```js
+const PORT = 3000;
+
 app.listen(PORT, () => {
   console.log(`server is on port ${PORT}...`);
   /*
        4. Establish the connection when the server runs
     */
-  connectToMongoDB();
+  connectToMongoDb();
 });
 ```
 
@@ -106,26 +106,31 @@ const snackSchema = new mongoose.Schema(
   {
     brand: {
       type: String,
-      default: "",
       unique: true,
+      required: true,
     },
+
     category: {
       type: String,
-      default: "",
+      default: '',
     },
+
     calories: {
       type: Number,
       default: 0,
     },
+
     delicious: {
       type: Boolean,
       default: true,
     },
+
     comments: {
       type: Array,
       default: [],
     },
   },
+
   {
     timestamps: true,
   }
@@ -139,6 +144,7 @@ module.exports = Snack;
 - Type defines the data type
 - Default sets a value for properties that may be missing
 - Unique makes sure that only unique values are entered into the collection
+- The second argument to `mongoose.Schema` is a configuration object. In this case, we're saying that for this model, MongoDB should store a timestamp for the last time each document was created and updated.
 
 ## Routes
 
@@ -188,11 +194,10 @@ We need to set up a way to `C`reate to our database so that we have something to
 ```js
 router.post("/create-snack", async (req, res) => {
   try {
-    await Snack.create(req.body);
-
+    const createdSnack = await Snack.create(req.body);
     res.json({
       message: "success",
-      payload: req.body,
+      payload: createdSnack,
     });
   } catch (error) {
     console.log("create-snack function failed");
@@ -219,7 +224,6 @@ Now that we have some snacks in our database, let' make sure that the server can
 router.get("/", async (req, res) => {
   try {
     let foundSnacks = await Snack.find({});
-
     res.json({
       message: "success",
       payload: foundSnacks,
@@ -251,8 +255,7 @@ router.put("/update-snack/:id", async (req, res) => {
       { upsert: true }
     );
 
-    let updatedSnack = await Snack.find({ _id: req.params.id });
-
+    let updatedSnack = await Snack.findById(req.params.id);
     res.json({
       message: "success",
       payload: updatedSnack,
@@ -264,7 +267,6 @@ router.put("/update-snack/:id", async (req, res) => {
     };
 
     res.json(errorPacket);
-
     console.log(errorPacket);
   }
 });
@@ -291,8 +293,7 @@ Time to test it in postman:
 ```js
 router.delete("/delete-snack/:id", async (req, res) => {
   try {
-    await Snack.findByIdAndDelete({ _id: req.params.id });
-
+    await Snack.findByIdAndDelete(req.params.id);
     res.json({
       message: "success",
       payload: await Snack.find({}),
@@ -304,7 +305,6 @@ router.delete("/delete-snack/:id", async (req, res) => {
     };
 
     res.json(errorPacket);
-
     console.log(errorPacket);
   }
 });
