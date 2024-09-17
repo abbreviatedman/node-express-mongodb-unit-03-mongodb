@@ -32,7 +32,7 @@ MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb
 Now it's time to test that the server is running:
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` and `"MONGODB CONNECTED"` should show up in the terminal if dependencies were installed
+- `"server is on port 3000..."` and `"MONGODB CONNECTED"` should show up in the terminal if dependencies were installed
 - Use `ctrl + c` to shut down the server
 
 ## Albums Router
@@ -165,8 +165,8 @@ app.use("/api/albums", albumRouter);
 Now we can test this
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` and `"MONGODB CONNECTED"` should show up in the terminal.
-- Use Postman to make a POST request at `localhost:8080/api/albums/`. Use the Body tab (raw - text -> JSON) and create an album with a `title` and `artist`
+- `"server is on port 3000..."` and `"MONGODB CONNECTED"` should show up in the terminal.
+- Use Postman to make a POST request at `localhost:3000/api/albums/`. Use the Body tab (raw - text -> JSON) and create an album with a `title` and `artist`
 - Use Compass to see the entry
 - Use `ctrl + c` to shut down the server
 
@@ -245,7 +245,7 @@ const express = require("express");
 const router = express.Router();
 const { createUser } = require("./usersController");
 
-// 7b. Route the ability to create a user at localhost:8080/api/users
+// 7b. Route the ability to create a user at localhost:3000/api/users
 //   We deal with the network code here, and leave the database code to the
 //   controller.
 router.post("/", async function (req, res) {
@@ -282,8 +282,8 @@ app.use("/api/users", userRouter);
 And now we test it:
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` and `"MONGODB CONNECTED"` should show up in the terminal.
-- Use Postman to make a POST request at `localhost:8080/api/users`. Use the Body tab (raw - text -> JSON) and create a user with a `username`
+- `"server is on port 3000..."` and `"MONGODB CONNECTED"` should show up in the terminal.
+- Use Postman to make a POST request at `localhost:3000/api/users`. Use the Body tab (raw - text -> JSON) and create a user with a `username`
 - Use Compass to see the entry
 - Use `ctrl + c` to shut down the server
 
@@ -356,8 +356,8 @@ WARNING: DO NOT GIVE RELATIONAL DATA A "unique" QUALIFIER, IT WILL CAUSE AN ERRO
 We should test this immediately:
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` and `"MONGODB CONNECTED"` should show up in the terminal.
-- Use Postman to make a POST request at `localhost:8080/api/albums`. Use the Body tab (raw - text -> JSON) and create an album with a `title`, `artistName`, and a `userFavorites` in an array. Make sure to grab the ID from the `user` collection
+- `"server is on port 3000..."` and `"MONGODB CONNECTED"` should show up in the terminal.
+- Use Postman to make a POST request at `localhost:3000/api/albums`. Use the Body tab (raw - text -> JSON) and create an album with a `title`, `artistName`, and a `userFavorites` in an array. Make sure to grab the ID from the `user` collection
 - Use Compass to see the entry
 - Use `ctrl + c` to shut down the server
 
@@ -399,8 +399,8 @@ const userSchema = new mongoose.Schema(
 We should test this immediately:
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` and `"MONGODB CONNECTED"` should show up in the terminal.
-- Use Postman to make a POST request at `localhost:8080/api/users/`. Use the Body tab (raw - text -> JSON) and create a user with a `username` and a `favoriteAlbums` in an array. Make sure to grab the ID from the `albums` collection
+- `"server is on port 3000..."` and `"MONGODB CONNECTED"` should show up in the terminal.
+- Use Postman to make a POST request at `localhost:3000/api/users/`. Use the Body tab (raw - text -> JSON) and create a user with a `username` and a `favoriteAlbums` in an array. Make sure to grab the ID from the `albums` collection
 - Use Compass to see the entry
 - Use `ctrl + c` to shut down the server
 
@@ -418,7 +418,7 @@ const viewRouter = require("./routes/viewRoutes/viewRouter");
 app.use("/", viewRouter);
 ```
 
-Now turn on the server and navigate to `localhost:8080` in the browser. When you click on "Albums" you will see a list of albums you've created. When you click the link to see more about that album, you will see a list of users who have "favorited" that album. If you recall, these users are generated from a list of ID's on the albums collection! As long as you set up your schemas correctly, you can add new features on the front-end to give users a way to navigate around via relational data.
+Now turn on the server and navigate to `localhost:3000` in the browser. When you click on "Albums" you will see a list of albums you've created. When you click the link to see more about that album, you will see a list of users who have "favorited" that album. If you recall, these users are generated from a list of ID's on the albums collection! As long as you set up your schemas correctly, you can add new features on the front-end to give users a way to navigate around via relational data.
 
 If you would like to keep working on this project, here are bonus files to work on and function to create:
 

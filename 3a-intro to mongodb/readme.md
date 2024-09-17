@@ -70,15 +70,15 @@ require("dotenv").config();
 6. Listen to a port
 
 ```js
-app.listen(8080, () => {
-  console.log(`server on port 8080`);
+app.listen(3000, () => {
+  console.log(`server on port 3000`);
 });
 ```
 
 As usual, we test the server!
 
 - `node index.js`
-- "server on port 8080" is in the console
+- "server on port 3000" is in the console
 - `ctrl + c` to shut down the server
 
 ## Environment Variables
@@ -197,7 +197,7 @@ stud
 
 Finally, let's define a GET request for the root URL which returns all the documents in the Student collection. This should return the document we added.
 
-13. Set up a GET request to `localhost:8080`
+13. Set up a GET request to `localhost:3000`
 
 ```js
 app.get("/", (req, res) => {
@@ -220,9 +220,9 @@ app.get("/", (req, res) => {
 Let's try running the app!
 
 - `node index.js`
-- "server on port 8080" is in the console.
+- "server on port 3000" is in the console.
 - "One entry added" should show up in the console
-- Use Postman or the Browser and make a GET request to `localhost:8080`
+- Use Postman or the Browser and make a GET request to `localhost:3000`
 - Our document should show up in Postman (or the Browser, if that's what you used to test it)
 - "students" collection should also show up in MongoDB Compass!
 - MongoDB Atlas should also display a rise in it's graph, demonstrating that a connection has been established

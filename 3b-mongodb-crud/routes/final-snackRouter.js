@@ -9,7 +9,7 @@ const Snack = require("../models/snackModel");
 /*
     9. Write a router method to GET from the database
 */
-// localhost:8080/api/
+// localhost:3000/api/
 router.get("/", async (req, res) => {
   try {
     let foundSnacks = await Snack.find({});
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 /*
     8. Write a router method to post to the database
 */
-// localhost:8080/api/create-snack
+// localhost:3000/api/create-snack
 router.post("/create-snack", async (req, res) => {
   try {
     await Snack.create(req.body);
@@ -45,7 +45,7 @@ router.post("/create-snack", async (req, res) => {
 /*
     10. Write a router method to PUT into the database
 */
-// localhost:8080/api/update-snack/:id
+// localhost:3000/api/update-snack/:id
 router.put("/update-snack/:id", async (req, res) => {
   try {
     await Snack.updateOne(
@@ -75,7 +75,7 @@ router.put("/update-snack/:id", async (req, res) => {
 /*
     11. Write a router method to DELETE from the database
 */
-// localhost:8080/api/delete-snack/:id
+// localhost:3000/api/delete-snack/:id
 router.delete("/delete-snack/:id", async (req, res) => {
   try {
     await Snack.findByIdAndDelete({ _id: req.params.id });

@@ -27,7 +27,7 @@ app.use("/api", snackRouter);
 /*
     0. Starter code - Server start
 */
-const PORT = 8080;
+const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`server is on port ${PORT}...`);

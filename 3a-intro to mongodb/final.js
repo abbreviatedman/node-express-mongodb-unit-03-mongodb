@@ -50,7 +50,7 @@ stud.save().then(
 );
 
 /*
-    13. Set up a GET request to `localhost:8080`
+    13. Set up a GET request to `localhost:3000`
 */
 app.get("/", (req, res) => {
   Student.find({}, (err, found) => {
@@ -66,6 +66,6 @@ app.get("/", (req, res) => {
 /*
     6. Listen to a port
 */
-app.listen(8080, () => {
-  console.log(`server on port 8080`);
+app.listen(3000, () => {
+  console.log(`server on port 3000`);
 });

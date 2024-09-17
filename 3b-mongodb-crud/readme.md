@@ -31,7 +31,7 @@ npm install
 Now it's time to test that the server is running:
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` should show up in the terminal if dependencies were installed
+- `"server is on port 3000..."` should show up in the terminal if dependencies were installed
 - Use `ctrl + c` to shut down the server
 
 ## Database
@@ -95,7 +95,7 @@ app.listen(PORT, () => {
 ```
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` AND `"MONGODB CONNECTED"` should show up in the terminal. If it doesn't double check that your connection URI on `.env` is correct
+- `"server is on port 3000..."` AND `"MONGODB CONNECTED"` should show up in the terminal. If it doesn't double check that your connection URI on `.env` is correct
 - Use `ctrl + c` to shut down the server
 
 ## Models
@@ -184,7 +184,7 @@ app.use("/api", snackRouter);
 Before continuing, make sure to test the server
 
 - Use `node index.js` in the terminal.
-- `"server is on port 8080..."` AND `"MONGODB CONNECTED"` should show up in the terminal.
+- `"server is on port 3000..."` AND `"MONGODB CONNECTED"` should show up in the terminal.
 - Use `ctrl + c` to shut down the server
 
 ## `C`reate
@@ -213,7 +213,7 @@ router.post("/create-snack", async (req, res) => {
 Time to test it in postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a POST request to `localhost:8080/api/create-snack`
+- Go to Postman and make a POST request to `localhost:3000/api/create-snack`
 - Go to the body tab, and create a JSON object to fill out the fields
 - Hit Send, and check Compass to see that it exists
 - Use `ctrl + c` to shut down the server
@@ -244,7 +244,7 @@ router.get("/", async (req, res) => {
 Time to test it in postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a GET request to `localhost:8080/api`
+- Go to Postman and make a GET request to `localhost:3000/api`
 - Hit Send, and see if the data comes back
 - Use `ctrl + c` to shut down the server
 
@@ -290,7 +290,7 @@ The `Model.updateOne()` function takes in 3 arguments:
 Time to test it in postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a PUT request to `localhost:8080/api/update-snack`
+- Go to Postman and make a PUT request to `localhost:3000/api/update-snack`
 - Go to the body tab, and create a JSON object to fill out the fields
 - Hit Send, and see if the data has been updated in Compass
 - Use `ctrl + c` to shut down the server
@@ -325,7 +325,7 @@ router.delete("/delete-snack/:id", async (req, res) => {
 Time to test it in postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a DELETE request to `localhost:8080/api/delete-snack`
+- Go to Postman and make a DELETE request to `localhost:3000/api/delete-snack`
 - Make sure to use an ID from a snack in your database
 - Hit Send, and see if the data has been updated in Compass
 - Use `ctrl + c` to shut down the server
