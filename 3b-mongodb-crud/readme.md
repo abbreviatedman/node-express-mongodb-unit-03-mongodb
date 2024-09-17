@@ -22,7 +22,6 @@ There are some starter files in this lesson, most of which are empty. It's alrea
 To begin, there should be a package.json provided. This means we can install all the dependencies with one command:
 
 0. Install dependencies
-<!-- 0. Install dependencies -->
 
 ```
 npm install
@@ -39,7 +38,6 @@ Now it's time to test that the server is running:
 We will start by establishing a basic connection to MongoDB. In the `./database` folder, write the following on `mongodb.js`
 
 1. Set up a connection to MongoDB using mongoose:
-<!-- 1. Set up a connection to MongoDB using mongoose: -->
 
 ```js
 // 1a. Import mongoose, setup .env use
@@ -66,7 +64,6 @@ module.exports = connectToMongoDB;
 Next, we should make sure the correct connection string is protected by placing it in the `.env` file:
 
 2. Place your MongoDB connection string in .env
-<!-- 2. Place your MongoDB connection string in .env -->
 
 ```
 MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb.net/CRUD-test"
@@ -75,14 +72,12 @@ MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb
 The end of this URI should say `.net/CRUD-test`. This way we keep the databases in our cluster separated properly.
 
 3. Import the database connection on `index.js`
-<!-- 3. Import the database connection on `index.js` -->
 
 ```js
 const connectToMongoDB = require("./database/mongodb");
 ```
 
 4. Establish the connection when the server runs
-<!-- 4. Establish the connection when the server runs -->
 
 ```js
 app.listen(PORT, () => {
@@ -103,7 +98,6 @@ app.listen(PORT, () => {
 Next, we will set up our Model. This is accomplished by first setting up a Schema (collection blueprint), and exporting the model to be used elsewhere. Go to `./models/snackModel.js` to begin creating our model:
 
 5. Set up a Model for the database
-<!-- 5. Set up a Model for the database -->
 
 ```js
 const mongoose = require("mongoose");
@@ -153,7 +147,6 @@ Let's set up the Routes so that we can get to CRUD functionality, and test the s
 Go to `./routes/snackRouter.js` to begin:
 
 6. Set up basic router settings
-<!-- 6. Set up basic router settings -->
 
 ```js
 /*
@@ -173,7 +166,6 @@ module.exports = router;
 Now that the basics are set up, let's go back to `index.js` and import the router
 
 7. Import the router
-<!-- 7. Import the router -->
 
 ```js
 const snackRouter = require("./routes/snackRouter");
@@ -192,7 +184,6 @@ Before continuing, make sure to test the server
 We need to set up a way to `C`reate to our database so that we have something to `R`ead later. Let's go back to `./routes/snackRouter.js` and set up our ability to do this:
 
 8. Write a router method to POST to the database
-<!-- 8. Write a router method to post to the database -->
 
 ```js
 router.post("/create-snack", async (req, res) => {
@@ -223,7 +214,6 @@ Time to test it in postman:
 Now that we have some snacks in our database, let' make sure that the server can read the information on it's own
 
 9. Write a router method to GET from the database
-<!-- 9. Write a router method to GET from the database -->
 
 ```js
 router.get("/", async (req, res) => {
@@ -251,7 +241,6 @@ Time to test it in postman:
 ## `U`pdate
 
 10. Write a router method to PUT into the database
-<!-- 10. Write a router method to PUT into the database -->
 
 ```js
 router.put("/update-snack/:id", async (req, res) => {
@@ -298,7 +287,6 @@ Time to test it in postman:
 ## `D`estroy
 
 11. Write a router method to DELETE from the database
-<!-- 11. Write a router method to DELETE from the database -->
 
 ```js
 router.delete("/delete-snack/:id", async (req, res) => {
