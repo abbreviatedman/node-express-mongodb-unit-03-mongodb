@@ -10,22 +10,31 @@ require("dotenv").config();
 /*
     9. Establish a connection to our database
 */
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const connectToMongoDb = async function () {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI)
+        console.log('Connected to Atlas cluster.');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+mongoose.set("strictQuery", false);
+connectToMongoDb();
 
 /*
     10. Create a schema for a new collection
 */
 const studentSchema = new mongoose.Schema({
-  roll_no: {
-    type: Number,
-    required: true,
-  },
-  name: String,
-  year: Number,
-  subjects: [String],
+    studentId: {
+        type: Number,
+        required: true,
+    },
+
+    name: String,
+    year: Number,
+    subjects: [String],
+    retake: Boolean
 });
 
 /*
@@ -37,31 +46,39 @@ const Student = mongoose.model("Student", studentSchema);
     12. Add a document on load
 */
 // 12a. Create a document via the model
-const stud = new Student({
-  roll_no: 1001,
-  name: "Estudiante de Muestra",
-  year: 7,
-  subjects: ["Mongo", "Express", "React", "Node"],
-});
-// 12b. Send the document to the database
-stud.save().then(
-  () => console.log("One entry added"),
-  (err) => console.log(err)
-);
+const addStudent = async function() {
+    const student = new Student({
+        studentId: 1001,
+        name: "Estudiante de Muestra",
+        year: 7,
+        subjects: ["Mongo", "Express", "React", "Node"],
+        retake: false,
+    });
+
+    // 12b. Send the document to the database
+    try {
+        await student.save()
+        console.log("One entry added");
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+addStudent();
+
 
 /*
     13. Set up a GET request to `localhost:3000`
 */
-app.get("/", (req, res) => {
-  Student.find({}, (err, found) => {
-    if (!err) {
-      res.send(found);
-    } else {
-      console.log(err);
-      res.send("Something bad happened");
+app.get("/", async (req, res) => {
+    try {
+        const students = await Student.find({})
+        res.status(200).json(students);
+    } catch (error) {
+        console.log(err);
+        res.send("Something bad happened");
     }
-  }).catch((err) => console.log(`error: ${err}`));
-});
+})
 
 /*
     6. Listen to a port

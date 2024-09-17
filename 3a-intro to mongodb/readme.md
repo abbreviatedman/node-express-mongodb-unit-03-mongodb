@@ -23,25 +23,24 @@ Download the version (Mac or Windows) that matches your machine.
 
 2. Begin MongoDB Atlas setup (https://www.mongodb.com/try)
 
-- Create an account using GMail
-- You will first be asked a few question on how you plan on using Atlas. The answers given on this first page do not matter
-- Select M0 database, because it's free. By default, M10 may be selected, PLEASE MAKE SURE YOU SELECT THE FREE VERSION
-- Select Google Cloud, every other setting has been default
-- Create Cluster0
-- Create a database user (Username and Password)[USE A FAKE PASSWORD]
-- "Where would you like to connect from?" Select My Local Environment. The IP address of the computer you are on will automatically be added
-- NOTE: if you use a computer at home AND ALSO commute to class in person, you will need to whitelist BOTH IP addresses
-- Finish and close
-- Your Cluster0 should appear with a "CONNECT" button under it, click that button
-- Compass > I have MongoDB Compass Installed > Latest version
-- Copy the connection string, then go back to MongoDB Compass
-- Paste the string into the URI field. In the space where it says `<password>`, replace it with your password.
-- SAVE THIS STRING SOMEWHERE SAFE UNTIL WE NEED IT
-- Press Connect
+- Create an account. Save your username and password somewhere you can access from any machine. Write it down on paper or in a cloud-saved note or somewhere accessile.
+- Upon creating an account, you will be asked a few question on how you plan on using Atlas. The answers given on this first page do not matter.
+- Select M0 database, because it's free. By default, M10 may be selected, PLEASE MAKE SURE YOU SELECT THE FREE VERSION.
+- Select Google Cloud, every other setting has been default.
+- Create Cluster0.
+- Create a database user (Username and Password). It's recommended to use the same password as for your MongoDB account—the one you saved somewhere.
+- "Where would you like to connect from?" Select My Local Environment. The IP address of the computer you are on will automatically be added.
+- NOTE: if you use a computer at home AND ALSO commute to class in person, you will need to whitelist BOTH IP addresses.
+- Finish and close.
+- Your Cluster0 should appear with a "CONNECT" button under it, click that button.
+- Compass > I have MongoDB Compass Installed > Latest version.
+- Copy the connection string, then go back to MongoDB Compass.
+- Paste the string into the URI field. In the space where it says `<password>`, replace it with your password. SAVE THIS STRING SOMEWHERE SAFE UNTIL WE NEED IT.
+- Press Connect.
 
 By now, you should have Atlas and Compass both set up. Let's begin setting up our project.
 
-3. In VSCode terminal, navigate to 03.01.Intro-to-MongoDB and initialize the project
+3. In a VSCode terminal, navigate to the 3a directory and initialize the project:
 
 ```
 npm init -y
@@ -101,32 +100,33 @@ MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb
 8. Create a file called `.gitignore` to protect this variable from being seen on Github
 
 ```
-./node_modules
-.env
+\.node_modules
+\.env
 ```
 
 This file stops the listed files from being uploaded to Github. This way, if we upload our application to share it with others, our Environment Variables (and any credentials listed on it) remain safe and unseen (as well as stopping us from uploading local node module files).
 
 Next, we can establish a connection with our database using Mongoose
 
-9. Establish a connection to our database
+9. Establish a connection to our database. We'll create an async function to do so.
 
 ```js
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("MONGODB CONNECTED");
-  });
+const connectToMongoDb = async function () {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI)
+        console.log('Connected to Atlas cluster.');
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 mongoose.set("strictQuery", false);
+connectToMongoDb();
 ```
 
 `process.env.MONGODB_URI` is used to get the value from our Environment Variable.
 
-`mongoose.set('strictQuery', false);` is a middleware that mongoose currently needs.
+`mongoose.set('strictQuery', false);` is a setting that mongoose currently needs.
 
 ## Defining a Schema
 
@@ -136,10 +136,11 @@ A Schema defines the structure of the document, with all the field names and dat
 
 ```js
 const studentSchema = new mongoose.Schema({
-  roll_no: {
+  studentId: {
     type: Number,
     required: true,
   },
+
   name: String,
   year: Number,
   subjects: [String],
@@ -164,58 +165,69 @@ const Student = mongoose.model("Student", studentSchema);
 
 Let's add a document whenever our app is loaded.
 
-12. A) Add a document on load
+12. A) Add a document on load. We'll use an async function to do so.
 
 ```js
 // 12a. Create a document via the model
-const stud = new Student({
-  roll_no: 1001,
-  name: "Estudiante de Muestra",
-  year: 7,
-  subjects: ["Mongo", "Express", "React", "Node"],
-  retake: false,
-});
+const addStudent = async function() {
+    const student = new Student({
+        studentId: 1001,
+        name: "Estudiante de Muestra",
+        year: 7,
+        subjects: ["Mongo", "Express", "React", "Node"],
+        retake: false,
+    });
+}
+```
+
+By creating an object containing the values to our model `Student`, we can create a new document and use the `save()` method to save our document to the database:
+
+12. B) Send the document to the database and call our async function.
+
+```js
+const addStudent = async function() {
+    const student = new Student({
+        studentId: 1001,
+        name: "Estudiante de Muestra",
+        year: 7,
+        subjects: ["Mongo", "Express", "React", "Node"],
+        retake: false,
+    });
+
+    // 12b. Send the document to the database
+    try {
+        await student.save()
+        console.log("One entry added");
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+addStudent();
 ```
 
 Take note that all of this code is running EVERY TIME the server turns on, which means this document will be duplicated and you will have multiple "Estudiante de Muestra" documents on your `students` collection anytime you reset the server.
 
-By creating an object containing the values to our model `Student`, we can create a new document and use the `save()` method to save our document to the database:
-
-12. B) Send the document to the database
-
-```js
-// 12b. Send the document to the database
-stud
-  .save()
-  .then(() => {
-    console.log("One entry added");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-```
-
-Finally, let's define a GET request for the root URL which returns all the documents in the Student collection. This should return the document we added.
+Finally, let's define a GET request for the root URL that returns all the documents in the Student collection. This should return the document we added.
 
 13. Set up a GET request to `localhost:3000`
 
 ```js
-app.get("/", (req, res) => {
-  Student.find({}, (err, found) => {
-    if (!err) {
-      res.send(found);
-    } else {
-      console.log(err);
-      res.send("Something bad happened");
+app.get("/", async (req, res) => {
+    try {
+        const students = await Student.find({})
+        res.status(200).json(students);
+    } catch (error) {
+        console.log(err);
+        res.send("Something bad happened");
     }
-  });
-});
+}
 ```
 
-- `model.find()` find and returns documents
-- The first parameter `{}` is to specify queries to receive documents that match a particular condition. Here, we leave it blank to get back all the documents.
-- The callback function will find the documents that meet the condition, and handle any error if it occurs
-- `res.send(found)` returns the documents to the client
+- `model.find()` find and returns documents.
+- The first argument is to specify queries to receive documents that match a particular condition. Here, we leave it blank to get back all the documents.
+- The try/catch will find the documents that meet the condition, and handle any error if it occurs.
+- If there's no error `res.json(students)` returns the documents to the client.
 
 Let's try running the app!
 
