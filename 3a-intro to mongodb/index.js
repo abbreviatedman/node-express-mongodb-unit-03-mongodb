@@ -19,7 +19,7 @@
 */
 
 /*
-    13. Set up a GET request to `localhost:3000`
+    13. Set up a GET request to `localhost:3000/`
 */
 
 /*

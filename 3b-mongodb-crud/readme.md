@@ -27,7 +27,7 @@ To begin, there should be a package.json provided. This means we can install all
 npm install
 ```
 
-Now it's time to test that the server is running:
+Now it's time to test that the server can run:
 
 - Use `node index.js` in the terminal.
 - `"server is on port 3000..."` should show up in the terminal if dependencies were installed
@@ -35,14 +35,16 @@ Now it's time to test that the server is running:
 
 ## Database
 
-We will start by establishing a basic connection to MongoDB. In the `./database` folder, write the following on `mongodb.js`
+We will start by establishing a basic connection to MongoDB. In the `./database` folder, write the following in `mongodb.js`
 
 1. Set up a connection to MongoDB using mongoose:
 
 ```js
 // 1a. Import mongoose, setup .env use
 const mongoose = require("mongoose");
-require("dotenv").config();
+const dotenv = require("dotenv");
+
+dotenv.config()
 
 // 1b. Create a connection function
 const connectToMongoDb = async function () {
@@ -64,12 +66,12 @@ Next, we should make sure the correct connection string is protected by placing 
 2. Place your MongoDB connection string in .env
 
 ```
-MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb.net/CRUD-test"
+MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<CLUSTER-CODE>.mongodb.net/crud-test"
 ```
 
-The end of this URI should say `.net/CRUD-test`. "CRUD-test" will be the name of the database. This way we keep the databases in our cluster separated properly.
+The end of this URI should say `.net/crud-test`. "crud-test" will be the name of the database. This way we keep the databases in our cluster separated properly.
 
-3. Import the database connection on `index.js`
+3. Import the database connection in `index.js`
 
 ```js
 const connectToMongoDb = require("./database/mongodb");
@@ -91,6 +93,7 @@ app.listen(PORT, () => {
 
 - Use `node index.js` in the terminal.
 - `"server is on port 3000..."` AND `"MONGODB CONNECTED"` should show up in the terminal. If it doesn't double check that your connection URI on `.env` is correct
+  - Another potential error you may get here is if your current IP is not whitelisted. Check MongoDB's Atlas interface on the web.
 - Use `ctrl + c` to shut down the server
 
 ## Models
@@ -144,13 +147,13 @@ module.exports = Snack;
 - Type defines the data type
 - Default sets a value for properties that may be missing
 - Unique makes sure that only unique values are entered into the collection
-- The second argument to `mongoose.Schema` is a configuration object. In this case, we're saying that for this model, MongoDB should store a timestamp for the last time each document was created and updated.
+- The second argument to `mongoose.Schema` is a configuration object. In this case, we're saying that for this model, MongoDB should store a timestamps for the last times each document was created and updated.
 
 ## Routes
 
 Let's set up the Routes so that we can get to CRUD functionality, and test the server again as quickly as possible.
 
-Go to `./routes/snackRouter.js` to begin:
+Go to `./routes/snacksRouter.js` to begin:
 
 6. Set up basic router settings
 
@@ -174,9 +177,9 @@ Now that the basics are set up, let's go back to `index.js` and import the route
 7. Import the router
 
 ```js
-const snackRouter = require("./routes/snackRouter");
+const snacksRouter = require("./routes/snacksRouter");
 
-app.use("/api", snackRouter);
+app.use("/api", snacksRouter);
 ```
 
 Before continuing, make sure to test the server
@@ -187,12 +190,12 @@ Before continuing, make sure to test the server
 
 ## `C`reate
 
-We need to set up a way to `C`reate to our database so that we have something to `R`ead later. Let's go back to `./routes/snackRouter.js` and set up our ability to do this:
+We need to set up a way to `C`reate to our database so that we have something to `R`ead later. Let's go back to `./routes/snacksRouter.js` and set up our ability to do this:
 
 8. Write a router method to POST to the database
 
 ```js
-router.post("/create-snack", async (req, res) => {
+router.post("/snacks", async (req, res) => {
   try {
     const createdSnack = await Snack.create(req.body);
     res.json({
@@ -209,19 +212,19 @@ router.post("/create-snack", async (req, res) => {
 Time to test it in postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a POST request to `localhost:3000/api/create-snack`
+- Go to Postman and make a POST request to `localhost:3000/api/snacks`
 - Go to the body tab, and create a JSON object to fill out the fields
 - Hit Send, and check Compass to see that it exists
 - Use `ctrl + c` to shut down the server
 
 ## `R`ead
 
-Now that we have some snacks in our database, let' make sure that the server can read the information on it's own
+Now that we have some snacks in our database, let's make sure that the server can read the information on its own
 
-9. Write a router method to GET from the database
+9. Write a request handler function for GET requests to localhost:3000/api/snacks
 
 ```js
-router.get("/", async (req, res) => {
+router.get("/snacks", async (req, res) => {
   try {
     let foundSnacks = await Snack.find({});
     res.json({
@@ -235,19 +238,19 @@ router.get("/", async (req, res) => {
 });
 ```
 
-Time to test it in postman:
+Time to test it in Postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a GET request to `localhost:3000/api`
+- Go to Postman and make a GET request to `localhost:3000/api/snacks`
 - Hit Send, and see if the data comes back
 - Use `ctrl + c` to shut down the server
 
 ## `U`pdate
 
-10. Write a router method to PUT into the database
+10. Write a request handler function for PUT reqeuests to localhost:3000/api/snacks
 
 ```js
-router.put("/update-snack/:id", async (req, res) => {
+router.put("snacks/:id", async (req, res) => {
   try {
     await Snack.updateOne(
       { _id: req.params.id },
@@ -281,17 +284,17 @@ The `Model.updateOne()` function takes in 3 arguments:
 Time to test it in postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a PUT request to `localhost:3000/api/update-snack`
+- Go to Postman and make a PUT request to `localhost:3000/api/snacks/[a snack ID]`
 - Go to the body tab, and create a JSON object to fill out the fields
 - Hit Send, and see if the data has been updated in Compass
 - Use `ctrl + c` to shut down the server
 
 ## `D`estroy
 
-11. Write a router method to DELETE from the database
+11. Write a request handler function to DELETE reqeuests to localhost:3000/api/snacks
 
 ```js
-router.delete("/delete-snack/:id", async (req, res) => {
+router.delete("/snacks/:id", async (req, res) => {
   try {
     await Snack.findByIdAndDelete(req.params.id);
     res.json({
@@ -313,7 +316,7 @@ router.delete("/delete-snack/:id", async (req, res) => {
 Time to test it in postman:
 
 - Use `node index.js` in the terminal.
-- Go to Postman and make a DELETE request to `localhost:3000/api/delete-snack`
+- Go to Postman and make a DELETE request to `localhost:3000/api/snacks/[a snack ID]`
 - Make sure to use an ID from a snack in your database
 - Hit Send, and see if the data has been updated in Compass
 - Use `ctrl + c` to shut down the server

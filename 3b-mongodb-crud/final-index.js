@@ -6,7 +6,7 @@ const app = express();
 const logger = require("morgan");
 
 /*
-    3. Import the database connection on `index.js`
+    3. Import the database connection function.
 */
 const connectToMongoDb = require("./database/mongodb");
 
@@ -18,11 +18,11 @@ app.use(express.json());
 app.use(logger("dev"));
 
 /*
-    7. Import the router
+    7. Import and connect and connect the router
 */
-const snackRouter = require("./routes/snackRouter");
+const snacksRouter = require("./routes/snacskRouter");
 
-app.use("/api", snackRouter);
+app.use("/api", snacksRouter);
 
 /*
     0. Starter code - Server start
@@ -32,7 +32,7 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`server is on port ${PORT}...`);
   /*
-       4. Establish the connection when the server runs
+       4. Establish the databaes connection when the server runs
     */
   connectToMongoDb();
 });

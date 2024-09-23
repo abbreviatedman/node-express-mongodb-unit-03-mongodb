@@ -60,10 +60,12 @@ npm install express mongoose dotenv
 
 ```js
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
+const dotenv = require("dotenv"):
+
+const app = express();
 // Handles our Environment Variables
-require("dotenv").config();
+dotenv.config();
 ```
 
 6. Listen to a port
@@ -130,7 +132,7 @@ connectToMongoDb();
 
 ## Defining a Schema
 
-A Schema defines the structure of the document, with all the field names and data types. `mongoose.Schema()` will take in a javascript object, which we will use as our document.
+A Schema defines the structure of the document, with all the field names and data types. `mongoose.Schema()` will take in a javascript object, which we will use to define the keys and their type for our document.
 
 10. Create a schema for a new collection
 

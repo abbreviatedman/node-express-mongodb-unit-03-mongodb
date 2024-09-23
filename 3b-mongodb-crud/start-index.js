@@ -6,7 +6,7 @@ const app = express();
 const logger = require("morgan");
 
 /*
-    3. Import the database connection on `index.js`
+    3. Import the database connection function.
 */
 
 /*
@@ -28,6 +28,6 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`server is on port ${PORT}...`);
   /*
-       4. Establish the connection when the server runs
+       4. Establish the database connection when the server runs
     */
 });

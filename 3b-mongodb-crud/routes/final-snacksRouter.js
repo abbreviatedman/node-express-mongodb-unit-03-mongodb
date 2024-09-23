@@ -9,8 +9,8 @@ const Snack = require("../models/snackModel");
 /*
     9. Write a router method to GET from the database
 */
-// localhost:3000/api/
-router.get("/", async (req, res) => {
+// localhost:3000/api/snacks/
+router.get("/snacks", async (req, res) => {
   try {
     let foundSnacks = await Snack.find({});
     res.json({
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
     8. Write a router method to post to the database
 */
 // localhost:3000/api/create-snack
-router.post("/create-snack", async (req, res) => {
+router.post("/snacks", async (req, res) => {
   try {
     const createdSnack = await Snack.create(req.body);
     res.json({
@@ -44,7 +44,7 @@ router.post("/create-snack", async (req, res) => {
     10. Write a router method to PUT into the database
 */
 // localhost:3000/api/update-snack/:id
-router.put("/update-snack/:id", async (req, res) => {
+router.put("/snacks/:id", async (req, res) => {
   try {
     await Snack.updateOne(
       { _id: req.params.id },
@@ -72,7 +72,7 @@ router.put("/update-snack/:id", async (req, res) => {
     11. Write a router method to DELETE from the database
 */
 // localhost:3000/api/delete-snack/:id
-router.delete("/delete-snack/:id", async (req, res) => {
+router.delete("/snacks/:id", async (req, res) => {
   try {
     await Snack.findByIdAndDelete(req.params.id);
     res.json({

@@ -2,10 +2,12 @@
     5. Import the necessary modules
 */
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
+const dotenv = require('dotenv');
+
+const app = express();
 // Handles our Environment Variables
-require("dotenv").config();
+dotenv.config();
 
 /*
     9. Establish a connection to our database
