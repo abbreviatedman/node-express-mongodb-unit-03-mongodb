@@ -2,7 +2,7 @@
 
 ---
 
-## REQUIREMENTS - CLIENT FUNCTIONALITY
+### Requirements - Client Functionality
 
 The client should be able to do the following on this application:
 
@@ -11,14 +11,9 @@ The client should be able to do the following on this application:
 - `U`pdate one Document
 - `D`elete one Document
 
-## BONUS
-
-Create a second collection that is related to the first
-
-- On a page showing information about one document on Collection 1, set up a link to one document on Collection 2
-- On a page showing information about one document on Collection 2, set up a link to one document on Collection 1
-
 ---
+
+### Steps
 
 1. Structure - create the following files/folders:
 
@@ -41,7 +36,9 @@ Create a second collection that is related to the first
 
 - In terminal, use command `npm install express morgan mongoose dotenv ejs method-override`
 
-## Procedures
+---
+
+### General Guidelines
 
 - Test that the server can run before creating ANY functionality
 - Create a homepage view and TEST THAT IT CAN BE SEEN FROM THE BROWSER
@@ -68,3 +65,12 @@ Create a second collection that is related to the first
 - - Back-end functionality, tested via Postman
 - - 1 page for the client to delete it via a button
 - - Plug the back-end to receive the action from the front-end
+
+--- 
+
+### BONUS
+
+- Create a second collection that is related to the first.
+- On a page showing information about one document from Collection 1, set up a link to a document or multiple documents from Collection 2
+- On a page showing information about one document from Collection 2, set up a link to a document or multiple documents from Collection 1
+
